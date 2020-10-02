@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Models>
+	<Model name="inputBuffer" type="atomic" description="Buffer used to queue the input and send inputs out one by one by a spread delay">
+		<Inputs>
+			<Port name="In1" type="int" description="The input used to put integers in the input buffer"/>
+			<Port name="reqIn" type="int" description="The input used to request the first element in the queue to be sent"/>
+		</Inputs>
+		<Outputs>
+			<Port name="Out1" type="int" description="The port that sends the value out"/>
+		</Outputs>
+		<Files>
+			<File name="inputBuffer.cpp" type="CPP" location="/"/>
+			<File name="inputBuffer.h" type="H" location="/"/>
+			<File name="inputBuffer.ev" type="EV" location="/"/>
+			<File name="inputBuffer.ma" type="MA" location="/"/>
+		</Files>
+	</Model>
+	<Model name="BGPProcessor" type="atomic" description="Model used to take in the input values and process them. This will look in the already exists list and eliminate duplicates and show to the output only unique inputs.">
+		<Inputs>
+			<Port name="ProcessorIn1" type="int" description="Will take in the value from the queue"/>
+		</Inputs>
+		<Outputs>
+			<Port name="ProcessorOut1" type="int" description="Will output the generated route"/>
+			<Port name="ProcessorOut2" type="int" description="Will output a request to be sent new data"/>
+		</Outputs>
+		<Files>
+			<File name="BGPProcessor.cpp" type="CPP" location="/"/>
+			<File name="BGPProcessor.h" type="H" location="/"/>
+		</Files>
+	</Model>
+	<Model name="BGP" type="coupled" description="The overall model that couples BGPProcessor and the inputBuffer creating a single BGP unit">
+		<Inputs>
+			<Port name="In" type="int" description="The overall input of the system"/>
+		</Inputs>
+		<Outputs>
+			<Port name="Out" type="int" description="The overall output of the system. Outputs the generated route"/>
+		</Outputs>
+		<Files>
+			<File name="BGP.ma" type="MA" location=""/>
+		</Files>
+	</Model>
+</Models>
